@@ -9,15 +9,17 @@ function App() {
         firstName: "",
         lastName: "",
         email: "",
+        email_error: false,
         age: 8,
         photo: null as File | null,
         workoutDate: null as Date | null
     });
 
-    const handleTextChange = (name: string, value: string) => {
+    const handleTextChange = (name: string, value: string, email_error: boolean = false) => {
         setFormData(prev => ({
             ...prev,
-            [name]: value
+            [name]: value,
+            email_error
         }));
     };
 
@@ -53,7 +55,8 @@ function App() {
             formData.lastName.trim() !== "" &&
             formData.email.trim() !== "" &&
             formData.photo !== null &&
-            formData.workoutDate !== null
+            formData.workoutDate !== null &&
+            !formData.email_error
         );
     };
 
