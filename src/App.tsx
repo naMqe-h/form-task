@@ -1,4 +1,4 @@
-import { useState, FormEvent } from "react"
+import { useState, FormEvent, useEffect } from "react"
 import { FileInput } from "./components/FileInput"
 import { Slider } from "./components/Slider"
 import { TextField } from "./components/TextField"
@@ -12,8 +12,10 @@ function App() {
         email_error: false,
         age: 8,
         photo: null as File | null,
-        workoutDate: null as Date | null
+        workoutDate: null as Date | null,
+        workoutTime: undefined as string | undefined
     });
+    const [formFilled, setFormFilled] = useState<boolean>(false)
 
     const handleTextChange = (name: string, value: string, email_error: boolean = false) => {
         setFormData(prev => ({
@@ -44,23 +46,33 @@ function App() {
         }));
     };
 
+    const handleTimeChange = (time: string) => {
+        setFormData(prev => ({
+            ...prev,
+            workoutTime: time
+        }));
+    };
+
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         console.log(formData);
     };
 
-    const isFormComplete = () => {
-        return (
-            formData.firstName.trim() !== "" &&
-            formData.lastName.trim() !== "" &&
-            formData.email.trim() !== "" &&
-            formData.photo !== null &&
-            formData.workoutDate !== null &&
-            !formData.email_error
-        );
-    };
-
-    const buttonBgColor = isFormComplete() ? "#761BE4" : "#CBB6E5";
+    useEffect(() => {
+      if(
+        formData.firstName.trim() !== "" &&
+        formData.lastName.trim() !== "" &&
+        formData.email.trim() !== "" &&
+        formData.photo !== null &&
+        formData.workoutDate !== null &&
+        formData.workoutTime !== undefined &&
+        !formData.email_error
+      ) {
+        setFormFilled(true)
+      } else {
+        setFormFilled(false)
+      }
+    }, [formData])
 
     return (
         <main className="max-w-screen h-auto flex items-center justify-center py-32 overflow-x-hidden">
@@ -104,15 +116,16 @@ function App() {
                         <DateInput 
                             selectedDate={formData.workoutDate}
                             onDateChange={handleDateChange}
+                            selectedTime={formData.workoutTime}
+                            onTimeChange={handleTimeChange}
                         />
                     </div>
                 </section>
 
                 <button
                     type="submit"
-                    className="w-[426px] rounded-sm py-4 px-8"
-                    style={{ backgroundColor: buttonBgColor }}
-                    disabled={isFormComplete()}
+                    className={`w-[426px] rounded-sm py-4 px-8 ${formFilled ? "bg-[#761BE4] cursor-pointer hover:bg-[#6A19CD]" : "bg-[#CBB6E5] cursor-not-allowed"}`}
+                    disabled={!formFilled}
                 >
                     <span className="text-white text-lg font-medium">
                         Send Application
