@@ -1,92 +1,20 @@
-import { useState, FormEvent, useEffect } from "react"
+import { useForm } from "./hooks/useForm"
 import { FileInput } from "./components/FileInput"
 import { Slider } from "./components/Slider"
 import { TextField } from "./components/TextField"
 import { DateInput } from "./components/DateInput"
 
 function App() {
-    const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        email_error: false,
-        age: 8,
-        photo: null as File | null,
-        workoutDate: null as Date | null,
-        workoutTime: undefined as string | undefined
-    });
-    const [formFilled, setFormFilled] = useState<boolean>(false)
-
-    const handleTextChange = (name: string, value: string, email_error: boolean = false) => {
-        setFormData(prev => ({
-            ...prev,
-            [name]: value,
-            email_error
-        }));
-    };
-
-    const handleAgeChange = (value: number) => {
-        setFormData(prev => ({
-            ...prev,
-            age: value
-        }));
-    };
-
-    const handleFileChange = (file: File | null) => {
-        setFormData(prev => ({
-            ...prev,
-            photo: file
-        }));
-    };
-
-    const handleDateChange = (date: Date | null) => {
-        setFormData(prev => ({
-            ...prev,
-            workoutDate: date
-        }));
-    };
-
-    const handleTimeChange = (time: string | undefined) => {
-        setFormData(prev => ({
-            ...prev,
-            workoutTime: time
-        }));
-    };
-
-    const handleSubmit = (e: FormEvent) => {
-        e.preventDefault();
-        
-        const formDataToSend = new FormData();
-        
-        formDataToSend.append('firstName', formData.firstName);
-        formDataToSend.append('lastName', formData.lastName);
-        formDataToSend.append('email', formData.email);
-        formDataToSend.append('age', formData.age.toString());
-        formDataToSend.append('photo', formData.photo as File);
-        formDataToSend.append('workoutDate', formData.workoutDate?.toISOString() as string);
-        formDataToSend.append('workoutTime', formData.workoutTime as string);
-        
-        fetch('http://letsworkout.pl/submit', {
-            method: 'POST',
-            body: formDataToSend
-        })
-    };
-
-    useEffect(() => {
-      if(
-        formData.firstName.trim() !== "" &&
-        formData.lastName.trim() !== "" &&
-        formData.email.trim() !== "" &&
-        formData.photo !== null &&
-        formData.workoutDate !== null &&
-        formData.workoutTime !== undefined &&
-        !formData.email_error
-      ) {
-        setFormFilled(true)
-      } else {
-        setFormFilled(false)
-      }
-    }, [formData])
+    const {
+        formData,
+        formFilled,
+        handleTextChange,
+        handleAgeChange,
+        handleFileChange,
+        handleDateChange,
+        handleTimeChange,
+        handleSubmit
+    } = useForm();
 
     return (
         <main className="max-w-screen h-auto flex items-center justify-center py-8 md:py-32 px-4 md:px-0 overflow-x-hidden">
