@@ -1,3 +1,4 @@
+import { FileInput } from "./components/FileInput"
 import { Slider } from "./components/Slider"
 import { TextField } from "./components/TextField"
 
@@ -11,6 +12,7 @@ function App() {
         <TextField label="Last Name" />
         <TextField label="Email Address" type="email" />
         <Slider />
+        <FileInput />
       </div>
     </main>
   )
