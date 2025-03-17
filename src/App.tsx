@@ -55,7 +55,21 @@ function App() {
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        console.log(formData);
+        
+        const formDataToSend = new FormData();
+        
+        formDataToSend.append('firstName', formData.firstName);
+        formDataToSend.append('lastName', formData.lastName);
+        formDataToSend.append('email', formData.email);
+        formDataToSend.append('age', formData.age.toString());
+        formDataToSend.append('photo', formData.photo as File);
+        formDataToSend.append('workoutDate', formData.workoutDate?.toISOString() as string);
+        formDataToSend.append('workoutTime', formData.workoutTime as string);
+        
+        fetch('http://letsworkout.pl/submit', {
+            method: 'POST',
+            body: formDataToSend
+        })
     };
 
     useEffect(() => {
