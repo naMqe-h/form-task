@@ -1,13 +1,14 @@
-import { useState } from 'react';
+type SliderProps = {
+    value: number
+    onChange: (value: number) => void
+}
 
-export const Slider = () => {
-    const [value, setValue] = useState(8);
-
+export const Slider = ({ value, onChange }: SliderProps) => {
     const min = 8;
     const max = 100;
 
     const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(parseInt(e.target.value));
+        onChange(parseInt(e.target.value));
     };
 
     const getPercentage = () => ((value - min) / (max - min)) * 100;
@@ -22,6 +23,9 @@ export const Slider = () => {
             <div
                 className="absolute transform -translate-x-1/2 -bottom-8.5"
                 style={{ left: `${getPercentage()}%` }}
+                role="status"
+                aria-live="polite"
+                aria-label={`Selected age: ${value}`}
             >
                 <div className="absolute w-[9px] h-[9px] bg-[#FAF9FA] border-t border-l border-[#CBB6E5] transform rotate-45 -top-0.5 left-1/2 -translate-x-1/2"></div>
                 <div className="relative w-[37px] h-[25px] bg-[#FAF9FA] border-1 border-[#CBB6E5] rounded-sm text-center">
@@ -37,7 +41,10 @@ export const Slider = () => {
                 value={value} 
                 onChange={handleValueChange}
                 id='age-slider'
-                className="w-full cursor-pointer accent-[#761BE4] appearance-none h-[4px] bg-[#CBB6E5] rounded-full"
+                name="age"
+                aria-label="Age selection"
+                className="w-full cursor-pointer accent-[#761BE4] h-[4px] bg-[#CBB6E5] rounded-full"
+                required
             />
         </div>
     );
