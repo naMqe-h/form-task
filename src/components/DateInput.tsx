@@ -4,7 +4,7 @@ type DateInputProps = {
     selectedDate: Date | null
     onDateChange: (date: Date | null) => void
     selectedTime?: string
-    onTimeChange?: (time: string) => void
+    onTimeChange?: (time: string | undefined) => void
 }
 
 type Holiday = {
@@ -50,6 +50,10 @@ export const DateInput = ({
     useEffect(() => {
         if (selectedDate) {
             checkForObservance(selectedDate)
+            
+            if (isObservanceHoliday(selectedDate) && onTimeChange) {
+                onTimeChange(undefined)
+            }
         } else {
             setObservanceMessage('')
         }
@@ -228,13 +232,13 @@ export const DateInput = ({
 
     return (
         <div className="flex flex-col">
-            <div className="flex justify-between gap-6">
-                <div className="w-[326px] flex flex-col gap-2">
+            <div className="flex flex-col md:flex-row md:justify-between md:gap-6">
+                <div className="w-full md:w-[326px] flex flex-col gap-2 mx-auto md:mx-0">
                     <label htmlFor="date-picker" className="text-[#000853]">Date</label>
 
                     <div 
                         id="date-picker"
-                        className="w-[326px] h-[292px] bg-white border border-[#CBB6E5] rounded-lg flex flex-col items-center py-1"
+                        className="w-full max-w-[326px] h-[292px] mx-auto md:mx-0 bg-white border border-[#CBB6E5] rounded-lg flex flex-col items-center py-1"
                         role="grid"
                         aria-label="Calendar"
                     >
@@ -291,9 +295,9 @@ export const DateInput = ({
                 </div>
 
                 {selectedDate && !isObservanceHoliday(selectedDate) && (
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2 mt-6 md:mt-0 w-full md:w-auto">
                         <label className="text-[#000853] text-base">Time</label>
-                        <div className="flex flex-col gap-3">
+                        <div className="flex flex-row md:flex-col gap-3 flex-wrap md:justify-start w-full px-4 md:px-0">
                             {timeOptions.map(time => (
                                 <button
                                     key={time}

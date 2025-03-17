@@ -36,7 +36,7 @@ export const TextField = ({ label, type = "text", name, value, onChange }: Props
     };
 
     return (
-        <div className="w-[426px] h-auto flex flex-col gap-2">
+        <div className="w-full max-w-[426px] h-auto flex flex-col gap-2">
             <label htmlFor={id} className="text-base text-[#000853]">
                 {label}
             </label>

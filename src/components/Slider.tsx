@@ -14,7 +14,7 @@ export const Slider = ({ value, onChange }: SliderProps) => {
     const getPercentage = () => ((value - min) / (max - min)) * 100;
 
     return (
-        <div className="w-[426px] flex flex-col gap-2 select-none relative">
+        <div className="w-full max-w-[426px] flex flex-col gap-2 select-none relative">
             <label htmlFor='age-slider' className="text-[#000853] text-base">Age</label>
             <div className='w-full flex justify-between'>
                 <span className="text-xs text-[#000853] pl-1">{min}</span>

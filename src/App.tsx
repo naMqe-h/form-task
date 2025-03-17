@@ -46,7 +46,7 @@ function App() {
         }));
     };
 
-    const handleTimeChange = (time: string) => {
+    const handleTimeChange = (time: string | undefined) => {
         setFormData(prev => ({
             ...prev,
             workoutTime: time
@@ -75,8 +75,8 @@ function App() {
     }, [formData])
 
     return (
-        <main className="max-w-screen h-auto flex items-center justify-center py-32 overflow-x-hidden">
-            <form onSubmit={handleSubmit} className="w-[426px] h-auto flex flex-col gap-6">
+        <main className="max-w-screen h-auto flex items-center justify-center py-8 md:py-32 px-4 md:px-0 overflow-x-hidden">
+            <form onSubmit={handleSubmit} className="w-full max-w-[426px] h-auto flex flex-col gap-6 pb-8">
                 <section>
                     <h2 className="font-medium text-2xl text-[#000853]">Personal info</h2>
                     <div className="flex flex-col gap-6 mt-6">
@@ -124,7 +124,7 @@ function App() {
 
                 <button
                     type="submit"
-                    className={`w-[426px] rounded-sm py-4 px-8 ${formFilled ? "bg-[#761BE4] cursor-pointer hover:bg-[#6A19CD]" : "bg-[#CBB6E5] cursor-not-allowed"}`}
+                    className={`w-full rounded-sm py-4 px-8 my-4 ${formFilled ? "bg-[#761BE4] cursor-pointer hover:bg-[#6A19CD]" : "bg-[#CBB6E5] cursor-not-allowed"}`}
                     disabled={!formFilled}
                 >
                     <span className="text-white text-lg font-medium">
