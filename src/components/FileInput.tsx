@@ -43,7 +43,7 @@ export const FileInput = ({ file, onChange }: FileInputProps) => {
                         <span className="text-[#761BE4] underline">
                             Upload a file
                         </span>
-                        <span className="text-[#898DA9] md:ml-2">or drag and drop here</span>
+                        <span className="text-[#898DA9] hidden md:block md:ml-2">or drag and drop here</span>
                     </div>
                 )}
             </div>
